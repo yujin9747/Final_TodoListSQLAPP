@@ -101,7 +101,7 @@ public class TodoList {
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
-				String desc = rs.getString("memeo") ;
+				String desc = rs.getString("memo") ;
 				String category = rs.getString("category") ;
 				String current_date = rs.getString("current_date") ;
 				String due_date = rs.getString("due_date") ;
@@ -130,7 +130,7 @@ public class TodoList {
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
-				String desc = rs.getString("memeo") ;
+				String desc = rs.getString("memo") ;
 				String category = rs.getString("category") ;
 				String current_date = rs.getString("current_date") ;
 				String due_date = rs.getString("due_date") ;
@@ -152,7 +152,7 @@ public class TodoList {
 		PreparedStatement ptmt ;
 		keyword = "%" + keyword + "%" ;
 		try {
-			String sql = "SELECT * FROM list where title like ? or memo like ?;" ;
+			String sql = "SELECT * FROM list where title like ? OR memo like ?;" ;
 			ptmt = conn.prepareStatement(sql) ;
 			ptmt.setString(1, keyword);
 			ptmt.setString(2, keyword);
@@ -160,7 +160,7 @@ public class TodoList {
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
-				String desc = rs.getString("memeo") ;
+				String desc = rs.getString("memo") ;
 				String category = rs.getString("category") ;
 				String current_date = rs.getString("current_date") ;
 				String due_date = rs.getString("due_date") ;
@@ -189,7 +189,7 @@ public class TodoList {
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
-				String desc = rs.getString("memeo") ;
+				String desc = rs.getString("memo") ;
 				String category = rs.getString("category") ;
 				String current_date = rs.getString("current_date") ;
 				String due_date = rs.getString("due_date") ;
@@ -248,7 +248,7 @@ public class TodoList {
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
-				String desc = rs.getString("memeo") ;
+				String desc = rs.getString("memo") ;
 				String category = rs.getString("category") ;
 				String current_date = rs.getString("current_date") ;
 				String due_date = rs.getString("due_date") ;

@@ -12,13 +12,10 @@ public class TodoMain {
 	public static void start() throws IOException {
 		Scanner sc = new Scanner(System.in); 
 		TodoList l = new TodoList();
-		boolean isList = false;
 		boolean quit = false;
 		String choice = " " ;
 		Menu.displaymenu();
 		do {
-	
-			isList = false;
 			Menu.prompt() ;
 			choice = sc.next();
 			switch (choice) {
@@ -40,31 +37,27 @@ public class TodoMain {
 				break;
 
 			case "ls_name_asc":
-				System.out.println("제목을 오름차순으로 정렬합니다.") ;
+				System.out.println("\n제목을 오름차순으로 정렬합니다.") ;
 				TodoUtil.listAll(l, "title", 1) ;
-				isList = true;
 				break;
 
 			case "ls_name_desc":
-				System.out.println("제목을 역순으로 정렬합니다.") ;
+				System.out.println("\n제목을 역순으로 정렬합니다.") ;
 				TodoUtil.listAll(l, "title", 0) ;
-				isList = true;
 				break;
 				
 			case "ls_date":
-				System.out.println("항목이 입력된 순서대로 정렬합니다.") ;
+				System.out.println("\n항목이 입력된 순서대로 정렬합니다.") ;
 				TodoUtil.listAll(l, "current_date", 1) ;
-				isList = true;
 				break;
 				
 			case "ls_date_desc":
-				System.out.println("항목이 입력된 역순서대로 정렬합니다.") ;
+				System.out.println("\n항목이 입력된 역순서대로 정렬합니다.") ;
 				TodoUtil.listAll(l, "current_date", 0) ;
-				isList = true;
 				break;
 				
 			case "ls_cat":
-				System.out.println("카테고리를 출력합니다.") ;
+				System.out.println("\n카테고리를 출력합니다.") ;
 				TodoUtil.listCateAll(l) ;
 				break;
 
@@ -99,8 +92,6 @@ public class TodoMain {
 				System.out.println("잘못 입력하셨습니다! 관리 명령어 사용법이 필요하시면 help를 입력해주세요");
 				break;
 			}
-			
-			if(isList) TodoUtil.listAll(l);
 		} while (!quit);
 		sc.close() ;
 	}

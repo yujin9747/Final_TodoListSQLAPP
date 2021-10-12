@@ -100,14 +100,14 @@ public class TodoUtil {
 	public static void listAll(TodoList l) { //수정 완료
 		System.out.println("\n\n<< 전체 목록 , 총 " + l.getCount()+"개 >>");
 		for (TodoItem item : l.getList()) {
-			System.out.println(item.toString());
+			System.out.print(item.toString());
 		}
 	}
 	
 	public static void listAll(TodoList l, int comp) {
 		int count = 0 ;
 		for (TodoItem item : l.getList(comp)) {
-			System.out.println(item.toString());
+			System.out.print(item.toString());
 			count++ ;
 		}
 		System.out.printf("총 %d개의 항목이 완료 되었습니다.\n", count) ;
@@ -118,7 +118,7 @@ public class TodoUtil {
 		//정렬된 리스트 하나하나 출력하기
 		System.out.printf("전체 목록 %d개 \n", l.getCount()) ;
 		for (TodoItem item : l.getOrderedList(field, version)) {
-			System.out.println(item.toString());
+			System.out.print(item.toString());
 		}
 	}
 
@@ -126,7 +126,7 @@ public class TodoUtil {
 	public static void find(TodoList l, String keyword) {
 		int count = 0 ;
 		for (TodoItem item : l.getList(keyword)) {
-			System.out.println(item.toString());
+			System.out.print(item.toString());
 			count++ ;
 		}
 		System.out.printf("총 %d개의 항목을 찾았습니다.\n\n", count) ;
@@ -135,7 +135,7 @@ public class TodoUtil {
 	public static void find_cat(TodoList l, String cat) {
 		int count = 0 ; //키워드로 찾아진 항목의 갯수 카운팅
 		for (TodoItem item : l.getListCategory(cat)) {
-			System.out.println(item.toString());
+			System.out.print(item.toString());
 			count++ ;
 		}
 		System.out.printf("총 %d개의 항목을 찾았습니다.\n\n", count) ;
