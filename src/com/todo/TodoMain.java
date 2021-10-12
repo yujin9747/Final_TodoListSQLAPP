@@ -1,0 +1,107 @@
+package com.todo;
+  
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.todo.dao.TodoItem;
+import com.todo.dao.TodoList;
+import com.todo.menu.Menu;
+import com.todo.service.TodoUtil; 
+public class TodoMain {
+	public static void start() throws IOException {
+		Scanner sc = new Scanner(System.in); 
+		TodoList l = new TodoList();
+		boolean isList = false;
+		boolean quit = false;
+		String choice = " " ;
+		Menu.displaymenu();
+		do {
+	
+			isList = false;
+			Menu.prompt() ;
+			choice = sc.next();
+			switch (choice) {
+
+			case "add":
+				TodoUtil.createItem(l);
+				break;
+			
+			case "del":
+				TodoUtil.deleteItem(l);
+				break;
+				
+			case "edit":
+				TodoUtil.updateItem(l);
+				break;
+				
+			case "ls":
+				TodoUtil.listAll(l);
+				break;
+
+			case "ls_name_asc":
+				System.out.println("제목을 오름차순으로 정렬합니다.") ;
+				TodoUtil.listAll(l, "title", 1) ;
+				isList = true;
+				break;
+
+			case "ls_name_desc":
+				System.out.println("제목을 역순으로 정렬합니다.") ;
+				TodoUtil.listAll(l, "title", 0) ;
+				isList = true;
+				break;
+				
+			case "ls_date":
+				System.out.println("항목이 입력된 순서대로 정렬합니다.") ;
+				TodoUtil.listAll(l, "current_date", 1) ;
+				isList = true;
+				break;
+				
+			case "ls_date_desc":
+				System.out.println("항목이 입력된 역순서대로 정렬합니다.") ;
+				TodoUtil.listAll(l, "current_date", 0) ;
+				isList = true;
+				break;
+				
+			case "ls_cat":
+				System.out.println("카테고리를 출력합니다.") ;
+				TodoUtil.listCateAll(l) ;
+				break;
+
+			case "exit":
+				quit = true;
+				break;
+				
+			case "help" :
+				Menu.displaymenu();
+				break ;
+			case "find" :
+				String keyword = sc.next();
+				TodoUtil.find(l, keyword);
+				break ;
+				
+			case "find_cat" :
+				String find_cat_keyword = sc.next();
+				TodoUtil.find_cat(l, find_cat_keyword);
+				break ;
+				
+			case "comp" :
+				int completed_id = sc.nextInt();
+				//TodoUtil.completeItem() ;
+				System.out.println("완료 체크 하였습니다.") ;
+				break ;
+				
+			case "ls_comp" :
+				System.out.println("완료된 항목을 출력합니다.") ;
+				TodoUtil.listAll(l, 1);
+				break ;
+			default:
+				System.out.println("잘못 입력하셨습니다! 관리 명령어 사용법이 필요하시면 help를 입력해주세요");
+				break;
+			}
+			
+			if(isList) TodoUtil.listAll(l);
+		} while (!quit);
+		sc.close() ;
+	}
+}
