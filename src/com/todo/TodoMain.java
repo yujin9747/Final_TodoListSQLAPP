@@ -1,10 +1,7 @@
 package com.todo;
   
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
-
-import com.todo.dao.TodoItem;
 import com.todo.dao.TodoList;
 import com.todo.menu.Menu;
 import com.todo.service.TodoUtil; 
@@ -47,13 +44,13 @@ public class TodoMain {
 				break;
 				
 			case "ls_date":
-				System.out.println("\n항목이 입력된 순서대로 정렬합니다.") ;
-				TodoUtil.listAll(l, "current_date", 1) ;
+				System.out.println("\n마감기한이 가까운 순서대로 정렬합니다.") ;
+				TodoUtil.listAll(l, "due_date", 1) ;
 				break;
 				
 			case "ls_date_desc":
-				System.out.println("\n항목이 입력된 역순서대로 정렬합니다.") ;
-				TodoUtil.listAll(l, "current_date", 0) ;
+				System.out.println("\n마감기한기준으로 역순으로 정렬합니다.") ;
+				TodoUtil.listAll(l, "due_date", 0) ;
 				break;
 				
 			case "ls_cat":
@@ -79,9 +76,7 @@ public class TodoMain {
 				break ;
 				
 			case "comp" :
-				int completed_id = sc.nextInt();
-				//TodoUtil.completeItem() ;
-				System.out.println("완료 체크 하였습니다.") ;
+				TodoUtil.completeItem(l) ;
 				break ;
 				
 			case "ls_comp" :

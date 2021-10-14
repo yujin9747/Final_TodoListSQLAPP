@@ -38,7 +38,7 @@ public class TodoList {
 	
 	public int updateItem(TodoItem t) {
 		int count = 0 ; //몇 개의 항목이 영향을 받았는지
-        String sql = "update list set title = ?, memo = ? , category = ?, current_date = ? due_date = ? where = ?;" ;
+        String sql = "update list set title = ?, memo = ? , category = ?, current_date = ?, due_date = ?, is_completed = ? where id = ?;" ;
         PreparedStatement pstmt ;
         try {
         	pstmt = conn.prepareStatement(sql) ; 
@@ -48,7 +48,8 @@ public class TodoList {
 	        pstmt.setString(3, t.getCategory());
 	        pstmt.setString(4, t.getCurrent_date());
 	        pstmt.setString(5, t.getDue_date());
-	        pstmt.setInt(6, t.getId());
+	        pstmt.setInt(6, t.getComp());
+	        pstmt.setInt(7, t.getId());
 	        count = pstmt.executeUpdate() ;
 	        pstmt.close();
         }catch(Exception e) {
@@ -60,7 +61,7 @@ public class TodoList {
 	
 	public int deleteItem(int index) {
 		int count = 0 ; //몇 개의 항목이 영향을 받았는지
-        String sql = "delete from list where = ?;" ;
+        String sql = "delete from list where id =?;" ;
         PreparedStatement pstmt ;
         try {
         	pstmt = conn.prepareStatement(sql) ; 
@@ -105,9 +106,11 @@ public class TodoList {
 				String category = rs.getString("category") ;
 				String current_date = rs.getString("current_date") ;
 				String due_date = rs.getString("due_date") ;
+				int comp = rs.getInt("is_completed") ;
 				TodoItem t = new TodoItem(title, desc, category, due_date) ;
 				t.setId(id) ; //새로 일련번호를 부여하지 않도록. 기존의 데이터에 주어진 일련번호를 setting
 				t.setCurrent_date(current_date) ; //현재 시간이 아니라, 그 데이터가 db파일에 추가 되었을 당시의 시간을 setting
+				t.setComp(comp);
 				list.add(t) ;
 			}
 			stmt.close();
@@ -156,7 +159,7 @@ public class TodoList {
 			ptmt = conn.prepareStatement(sql) ;
 			ptmt.setString(1, keyword);
 			ptmt.setString(2, keyword);
-			ResultSet rs = ptmt.executeQuery(sql) ;
+			ResultSet rs = ptmt.executeQuery() ;
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
@@ -185,7 +188,7 @@ public class TodoList {
 			String sql = "SELECT * FROM list where category like ? ;" ;
 			ptmt = conn.prepareStatement(sql) ;
 			ptmt.setString(1, cat);
-			ResultSet rs = ptmt.executeQuery(sql) ;
+			ResultSet rs = ptmt.executeQuery() ;
 			while(rs.next()) {
 				int id = rs.getInt("id") ;
 				String title = rs.getString("title") ;
@@ -227,11 +230,11 @@ public class TodoList {
 	}
 	
 	public int indexOf(TodoItem t) {
-		return list.indexOf(t);
+		return getList().indexOf(t);
 	}
 	
 	public boolean isDuplicate(String title) { 
-		for (TodoItem item : list) {
+		for (TodoItem item : getList()) {
 			if (title.equals(item.getTitle())) return true;
 		}
 		return false ;
@@ -255,6 +258,7 @@ public class TodoList {
 				TodoItem t = new TodoItem(title, desc, category, due_date) ;
 				t.setId(id) ; //새로 일련번호를 부여하지 않도록. 기존의 데이터에 주어진 일련번호를 setting
 				t.setCurrent_date(current_date) ; //현재 시간이 아니라, 그 데이터가 db파일에 추가 되었을 당시의 시간을 setting
+				t.setComp(1);
 				list.add(t) ;
 			}
 			stmt.close();

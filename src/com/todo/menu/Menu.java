@@ -11,8 +11,8 @@ public class Menu {
         System.out.println("ls - 전체 목록 보기");
         System.out.println("ls_name_asc - 목록을 이름순으로 정렬하기(오름차순)");
         System.out.println("ls_name_desc - 목록을 이름순으로 정렬하기(내림차순)");
-        System.out.println("ls_date - 목록을 항목이 추가된 순서대로 정렬하기");
-        System.out.println("ls_date_desc - 목룍을 항목이 추가된 역순으로 정렬하기");
+        System.out.println("ls_date - 마감기한 순서대로 정렬하기");
+        System.out.println("ls_date_desc - 마감기한 역순으로 정렬하기");
         System.out.println("ls_cat - 카테고리 정렬하기");
         System.out.println("ls_comp - 완료된 항목 정렬하기");
         System.out.println("find (키워드 입력) - 키워드로 검색하기");

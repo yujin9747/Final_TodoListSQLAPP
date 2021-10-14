@@ -54,9 +54,8 @@ public class TodoItem {
 	}
 
 	public String toString() {
-		String s = id + ". [" + category + "] " + title ;
-		if(comp == 1) s += "[v]" ;
-    	return s + " - " + desc + " - " + due_date + " - " + current_date + "\n" ;
+		if(comp == 1) return id + ". [" + category + "] " + title + "[v]" + " - " + desc + " - " + due_date + " - " + current_date + "\n";
+    	return id + ". [" + category + "] " + title + " - " + desc + " - " + due_date + " - " + current_date + "\n" ;
     }
 
 
