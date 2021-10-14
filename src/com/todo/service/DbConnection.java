@@ -16,7 +16,6 @@ public class DbConnection {
 			}
 		}
 	}
-	
 	public static Connection getConnection() {
 		if(conn == null) {
 			try {

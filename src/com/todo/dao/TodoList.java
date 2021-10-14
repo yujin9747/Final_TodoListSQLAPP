@@ -206,10 +206,11 @@ public class TodoList {
 			e.printStackTrace();
 		}
 		
+		
 		return list ;
 	}
 	
-	
+
 	public ArrayList<String> getCategories() { //list에 모든 항목을 담아서 리턴해 줘야 함. 
 		ArrayList<String> list = new ArrayList<String>();
 		Statement stmt ;

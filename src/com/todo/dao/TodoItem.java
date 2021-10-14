@@ -10,7 +10,6 @@ public class TodoItem {
     private String category ;
     private String due_date ;
     private int comp ;
-
  
     public int getComp() {
 		return comp;
