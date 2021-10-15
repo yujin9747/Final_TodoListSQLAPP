@@ -33,6 +33,10 @@ public class TodoMain {
 			case "ls":
 				TodoUtil.listAll(l);
 				break;
+				
+			case "ls_simple":
+				TodoUtil.listAll_simple(l);
+				break;
 
 			case "ls_name_asc":
 				System.out.println("\n제목을 오름차순으로 정렬합니다.") ;
@@ -83,6 +87,10 @@ public class TodoMain {
 			case "ls_comp" :
 				System.out.println("완료된 항목을 출력합니다.") ;
 				TodoUtil.listAll(l, 1);
+				break ;
+				
+			case "1st" :
+				TodoUtil.printFirst(l) ;
 				break ;
 			default:
 				System.out.println("잘못 입력하셨습니다! 관리 명령어 사용법이 필요하시면 help를 입력해주세요");

@@ -10,6 +10,7 @@ public class Menu {
         System.out.println("edit - 항목 수정하기");
         System.out.println("comp - 항목 완료 체크하기");
         System.out.println("ls - 전체 목록 보기");
+        System.out.println("ls_simple - 전체 목록 보기 - 중요도와 완료율만 간단히 보기");
         System.out.println("ls_name_asc - 목록을 이름순으로 정렬하기(오름차순)");
         System.out.println("ls_name_desc - 목록을 이름순으로 정렬하기(내림차순)");
         System.out.println("ls_date - 마감기한 순서대로 정렬하기");
@@ -18,6 +19,7 @@ public class Menu {
         System.out.println("ls_comp - 완료된 항목 정렬하기");
         System.out.println("find (키워드 입력) - 키워드로 검색하기");
         System.out.println("find_cat (키워드 입력) - 키워드로 카테고리 검색하기");
+        System.out.println("1st - 우선순위가 가장 높은 항목 찾기");
         System.out.println("exit - 종료");
     }
     public static void prompt() {

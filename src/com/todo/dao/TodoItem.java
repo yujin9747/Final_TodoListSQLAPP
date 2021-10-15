@@ -10,6 +10,8 @@ public class TodoItem {
     private String category ;
     private String due_date ;
     private int comp ;
+    private int importance ;
+    private String completion_rate ;
  
     public int getComp() {
 		return comp;
@@ -19,16 +21,34 @@ public class TodoItem {
 		this.comp = comp;
 	}
 
-	public TodoItem(String title, String desc, String category, String due_date){
+	public TodoItem(String title, String desc, String category, String due_date, int importance, String completion_rate){
         this.title=title;
         this.desc=desc;
         SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss") ;
         this.current_date=f.format(new Date()) ;
         this.category = category ;
         this.due_date = due_date ;
+        this.importance = importance ;
+        this.completion_rate = completion_rate ;
     }
     
-    public void setId(int id) {
+    public int getImportance() {
+		return importance;
+	}
+
+	public void setImportance(int importance) {
+		this.importance = importance;
+	}
+
+	public String getCompletion_rate() {
+		return completion_rate;
+	}
+
+	public void setCompletion_rate(String completion_rate) {
+		this.completion_rate = completion_rate;
+	}
+
+	public void setId(int id) {
     	this.id = id ;
     }
     
@@ -81,4 +101,12 @@ public class TodoItem {
     public void setCurrent_date(String current_date) {
         this.current_date = current_date;
     }
+
+	public String toStringSimple(int importance) {
+		if(importance == 1) return id + ". [" + category + "] " + title + " - 중요도 : * - 완료율 : " + completion_rate + "\n" ;
+		else if(importance == 2) return id + ". [" + category + "] " + title + " - 중요도 : ** - 완료율 : " + completion_rate + "\n" ;
+		else if(importance == 3) return id + ". [" + category + "] " + title + " - 중요도 : *** - 완료율 : " + completion_rate + "\n" ;
+		else if(importance == 4) return id + ". [" + category + "] " + title + " - 중요도 : **** - 완료율 : " + completion_rate + "\n" ;
+		else return id + ". [" + category + "] " + title + " - 중요도 : ***** - 완료율 : " + completion_rate + "\n" ;
+	}
 }

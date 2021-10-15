@@ -11,7 +11,8 @@ import com.todo.dao.TodoList;
 public class TodoUtil {
 	public static void createItem(TodoList list) { 
 		
-		String title, desc, category, due_date;
+		String title, desc, category, due_date, completion_rate;
+		int importance =0;
 		Scanner sc = new Scanner(System.in);
 		  
 		System.out.println("\nadd(항목 추가)를 선택하셨습니다!");
@@ -29,10 +30,21 @@ public class TodoUtil {
 		
 		System.out.print("마감기한을 입력해주세요 > ");
 		due_date = sc.nextLine();
-		TodoItem t = new TodoItem(title, desc, category, due_date);
+		int appropriate = 0;
+		while(appropriate == 0) {
+			System.out.print("중요도를 입력해주세요(1-5) > ");
+			importance = sc.nextInt();
+			if(importance >= 1 && importance <=5) appropriate =1 ;
+			else System.out.print("잘못 입력했습니다. 1-5사이의 값을 다시 입력하세요.");
+		}
+		sc.nextLine();
+		System.out.print("완료율을 입력해주세요 > ");
+		completion_rate = sc.next();
+		TodoItem t = new TodoItem(title, desc, category, due_date, importance, completion_rate);
 		if(list.addItem(t) > 0 ) {
 			System.out.println("**항목 추가 완료**\n");
 		}
+		
 	}
 
 	public static void deleteItem(TodoList l) {
@@ -58,6 +70,18 @@ public class TodoUtil {
 			if(l.deleteItem(number)>0)
 				System.out.println("**항목 삭제 완료**\n");
 		}
+	}
+	
+	// 개인 추가 기눙 : 완료된 항목을 동시에 삭제
+	public static void deleteItem(TodoList l, int yesOrno) {
+		if(yesOrno == 0) return ;
+		System.out.println("\n완료된 모든 항목을 삭제합니다!");
+		for(TodoItem item :l.getList()) {
+			if(item.getComp() == 1) {
+				l.deleteItem(item.getId()) ;
+			}
+		}
+		System.out.println("**완료된 항목 삭제 완료**\n");
 	}
 
 
@@ -93,8 +117,18 @@ public class TodoUtil {
 		String new_description = sc.nextLine().trim();
 		System.out.print("새 항목의 마감기한을 입력해주세요 > ");
 		String new_due_date = sc.nextLine().trim();
+		int appropriate = 0, new_importance = 0 ;
+		while(appropriate == 0) {
+			System.out.print("새 항목의 중요도를 입력해주세요(1-5) > ");
+			new_importance = sc.nextInt();
+			if(new_importance >= 1 && new_importance <=5) appropriate =1 ;
+			else System.out.print("잘못 입력했습니다. 1-5사이의 값을 다시 입력하세요.");
+		}
+		sc.nextLine();
+		System.out.print("새 항목의 완료율을 입력해주세요 > ");
+		String new_completion_rate = sc.nextLine().trim();
 		
-		TodoItem t = new TodoItem(new_title, new_description, new_category, new_due_date);
+		TodoItem t = new TodoItem(new_title, new_description, new_category, new_due_date, new_importance, new_completion_rate);
 		t.setId(number) ;
 		if(l.updateItem(t) > 0) 
 			System.out.println("**수정되었습니다**\n");
@@ -109,18 +143,29 @@ public class TodoUtil {
 		}
 	}
 	
+	public static void listAll_simple(TodoList l) {
+		System.out.println("\n\n<< 전체 목록 , 총 " + l.getCount()+"개 >>");
+		for (TodoItem item : l.getList()) {
+			System.out.print(item.toStringSimple(item.getImportance()));
+		}
+	}
+	
 	public static void listAll(TodoList l, int comp) {
 		int count = 0 ;
+		Scanner sc = new Scanner(System.in) ;
 		for (TodoItem item : l.getList(comp)) {
 			System.out.print(item.toString());
 			count++ ;
 		}
 		System.out.printf("총 %d개의 항목이 완료 되었습니다.\n", count) ;
+		if(count >0) {
+			System.out.print("완료된 항목을 모두 삭제하시겠습니까?(1 : 삭제합니다 , 0 : 삭제하지 않습니다) >> ") ;
+			int yesOrno = sc.nextInt() ;
+			deleteItem(l, yesOrno) ;
+		}
 	}
 	
 	public static void listAll(TodoList l, String field, int version) { //수정 완료
-		//리스트 정렬하는 함수 호출 해서 정렬된 리스트 받기
-		//정렬된 리스트 하나하나 출력하기
 		System.out.printf("전체 목록 %d개 \n", l.getCount()) ;
 		for (TodoItem item : l.getOrderedList(field, version)) {
 			System.out.print(item.toString());
@@ -158,8 +203,8 @@ public class TodoUtil {
 
 	public static void completeItem(TodoList l) {
 		System.out.print("항목 완료를 선택하셨습니다! 완료할 항목 번호를 입력해주세요 >> ") ;
-		String title = null, desc = null, category = null, due_date = null, current_date = null ;
-		int id =0;
+		String title = null, desc = null, category = null, due_date = null, current_date = null , completion_rate = null;
+		int id =0, importance = 0;
 		Scanner sc = new Scanner(System.in) ;
 		int number = sc.nextInt();
 		int being = 0 ; //해당 번호의 존재 여부
@@ -178,6 +223,8 @@ public class TodoUtil {
 					category = item.getCategory() ;
 					due_date = item.getDue_date() ;
 					current_date = item.getCurrent_date() ;
+					importance = item.getImportance() ;
+					completion_rate = item.getCompletion_rate() ;
 					break ;
 				}
 			}
@@ -187,7 +234,7 @@ public class TodoUtil {
 				number = sc.nextInt() ;
 			}
 		}
-		TodoItem t = new TodoItem(title, desc, category, due_date) ;
+		TodoItem t = new TodoItem(title, desc, category, due_date, importance, completion_rate) ;
 		t.setId(id);
 		t.setCurrent_date(current_date);
 		t.setComp(1);
@@ -196,4 +243,14 @@ public class TodoUtil {
 		
 	}
 	
+	public static void printFirst(TodoList l) {
+		if(l.getCount_importance(5) > 0) l.findFirst(5) ;
+		else if(l.getCount_importance(4)>0) l.findFirst(4) ;
+		else if(l.getCount_importance(3)>0) l.findFirst(3) ;
+		else if(l.getCount_importance(2)>0) l.findFirst(2) ;
+		else if(l.getCount_importance(1)>0) l.findFirst(1) ;
+		else System.out.println("리스트가 비어있습니다.") ;
+	}
+
+
 }
